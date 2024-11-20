@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>fetch('http://127.0.0.1:5000/query', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            question: userMessage
+        })
+    })</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nagrik Aur Samvidhan</title>
+    <link rel="icon" href="uploads/imgs/wp-logo.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <style>
+        /* Keyframe for floating animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section {
+            height: 100vh; /* Full viewport height */
+            background: center no-repeat;
+            background-size: cover; /* Ensure the image covers the entire section */
+            background-color: #5c636e; /* Fallback color */
+            background-blend-mode: multiply;
+            display: flex;
+            align-items: center; /* Vertically center the content */
+            justify-content: center; /* Horizontally center the content */
+        }
+
+        .content-container {
+            padding: 1rem;
+            margin: 0 auto;
+            max-width: 1280px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+    
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem; /* Larger text on medium screens and above */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            h1 {
+                font-size: 4rem; /* Even larger text on large screens */
+            }
+        }
+
+        @media (min-width: 768px) {
+            p {
+                font-size: 1.25rem; /* Larger text on medium screens and above */
+            }
+        }
+
+        @media (min-width: 640px) {
+            .button-group {
+                flex-direction: row;
+            }
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #1D4ED8;
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #1E40AF;
+        }
+
+        .arrow-icon {
+            width: 0.875rem;
+            height: 0.875rem;
+            margin-left: 0.5rem;
+            transform: rotate(0deg);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .content-container.hidden h1,
+        .content-container.hidden p,
+        .content-container.hidden .button-group {
+            opacity: 0;
+            transform: translateY(20px); /* Moves the text slightly downward when hidden */
+        }
+    </style>
+    <style>
+        /* Initial state of the cards (off-screen) */
+        .card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+    
+        /* State of the cards when they are visible on scroll */
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
+        /* Wipe down animation */
+        .card.wipe-down {
+            animation: wipeDown 0.6s ease forwards;
+        }
+    
+        @keyframes wipeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        
+    </style>
+    
+    <style>
+        /* Loading screen styles */
+        #loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff; /* Background color of the loading screen */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999; /* Ensures the loading screen is above everything else */
+        }
+
+        #loading-icon {
+            border: 4px solid #f3f3f3; /* Light grey background */
+            border-radius: 50%;
+            border-top: 4px solid #3498db; /* Blue top border */
+            width: 40px;
+            height: 40px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Spin animation */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hide the main content initially */
+        #main-content {
+            display: none;
+        }
+    </style>
+    <style>
+        @keyframes animate-1 {
+          0%, 100% {
+            box-shadow: 0px 0px 0px transparent, 59px 0px #00fff7, 41px 41px #00fff7, 0px 59px #00fff7, -41px 41px #00fff7, -59px 0px #00fff7, -41px -41px #00fff7, 0px -59px #00fff7;
+          }
+          50% {
+            box-shadow: 0px 0px 0px transparent, 54px 0px #00fff7, 38px 38px #00fff7, 0px 54px #00fff7, -38px 38px #00fff7, -54px 0px #00fff7, -38px -38px #00fff7, 0px -54px #00fff7;
+          }
+        }
+      
+        @keyframes animate-2 {
+          0%, 100% {
+            box-shadow: 0px 0px 0px transparent, 62px 0px #00fff7, 44px 44px #00fff7, 0px 62px #00fff7, -44px 44px #00fff7, -62px 0px #00fff7, -44px -44px #00fff7, 0px -62px #00fff7;
+          }
+          50% {
+            box-shadow: 0px 0px 0px transparent, 57px 0px #00fff7, 40px 40px #00fff7, 0px 57px #00fff7, -40px 40px #00fff7, -57px 0px #00fff7, -40px -40px #00fff7, 0px -57px #00fff7;
+          }
+        }
+      </style>
+    <style>
+        .step {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+    
+        .step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="loading-screen">
+        <div id="loading-icon"></div>
+    </div>
+    
+    <div>
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="uploads/imgs/wp-logo.png" class="h-16" alt="nagrik-aur-samvidhan">
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Nagrik Aur Samvidhan</span>
+        </a>
+        <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    </button>
+    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <button type="button" data-dropdown-toggle="language-dropdown-menu" class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+            <svg class="w-5 h-5 rounded-full me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3900 3900"><path fill="#b22234" d="M0 0h7410v3900H0z"/><path d="M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0" stroke="#fff" stroke-width="300"/><path fill="#3c3b6e" d="M0 0h2964v2100H0z"/><g fill="#fff"><g id="d"><g id="c"><g id="e"><g id="b"><path id="a" d="M247 90l70.534 217.082-184.66-134.164h228.253L176.466 307.082z"/><use xlink:href="#a" y="420"/><use xlink:href="#a" y="840"/><use xlink:href="#a" y="1260"/></g><use xlink:href="#a" y="1680"/></g><use xlink:href="#b" x="247" y="210"/></g><use xlink:href="#c" x="494"/></g><use xlink:href="#d" x="988"/><use xlink:href="#c" x="1976"/><use xlink:href="#e" x="2470"/></g></svg>
+            English (US)
+          </button>
+          <button 
+          type="button" 
+          onclick="location.href='http://127.0.0.1:8000/accounts/login/'"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Login/Register
+      </button>
+              
+    </div>
+    
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <li>
+                <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Home</a>
+            </li>
+            <li>
+                <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">About Us</a>
+            </li>
+            <li>
+                <a href="#resources" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Resources</a>
+            </li>
+            <li>
+                <button id="mega-menu-full-dropdown-button" data-collapse-toggle="mega-menu-full-dropdown" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Games <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+            </li>
+            <li>
+                <a href="#contact" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+            </li>
+        </ul>
+    </div>
+    
+</div>
+
+<div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700" id="language-dropdown-menu">
+    <ul class="py-2 font-medium" role="none">
+      <li>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+          <div class="inline-flex items-center">
+            <svg aria-hidden="true" class="h-3.5 w-3.5 rounded-full me-2" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-us" viewBox="0 0 512 512"><g fill-rule="evenodd"><g stroke-width="1pt"><path fill="#bd3d44" d="M0 0h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z" transform="scale(3.9385)"/><path fill="#fff" d="M0 10h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z" transform="scale(3.9385)"/></g><path fill="#192f5d" d="M0 0h98.8v70H0z" transform="scale(3.9385)"/><path fill="#fff" d="M8.2 3l1 2.8H12L9.7 7.5l.9 2.7-2.4-1.7L6 10.2l.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7L74 8.5l-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 7.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 24.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 21.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 38.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 35.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 52.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 49.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 66.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 63.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9z" transform="scale(3.9385)"/></g></svg>              
+            English (US)
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+          <div class="inline-flex items-center">
+            <svg class="h-3.5 w-3.5 rounded-full me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-de" viewBox="0 0 512 512"><path fill="#ffce00" d="M0 341.3h512V512H0z"/><path d="M0 0h512v170.7H0z"/><path fill="#d00" d="M0 170.7h512v170.6H0z"/></svg>
+            Hindi
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+          <div class="inline-flex items-center">
+            <svg class="h-3.5 w-3.5 rounded-full me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-it" viewBox="0 0 512 512"><g fill-rule="evenodd" stroke-width="1pt"><path fill="#fff" d="M0 0h512v512H0z"/><path fill="#009246" d="M0 0h170.7v512H0z"/><path fill="#ce2b37" d="M341.3 0H512v512H341.3z"/></g></svg>              
+            Tamil
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+          <div class="inline-flex items-center">
+            <svg class="h-3.5 w-3.5 rounded-full me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icon-css-cn" viewBox="0 0 512 512"><defs><path id="a" fill="#ffde00" d="M1-.3L-.7.8 0-1 .6.8-1-.3z"/></defs><path fill="#de2910" d="M0 0h512v512H0z"/><use width="30" height="20" transform="matrix(76.8 0 0 76.8 128 128)" xlink:href="#a"/><use width="30" height="20" transform="rotate(-121 142.6 -47) scale(25.5827)" xlink:href="#a"/><use width="30" height="20" transform="rotate(-98.1 198 -82) scale(25.6)" xlink:href="#a"/><use width="30" height="20" transform="rotate(-74 272.4 -114) scale(25.6137)" xlink:href="#a"/><use width="30" height="20" transform="matrix(16 -19.968 19.968 16 256 230.4)" xlink:href="#a"/></svg>
+            Kannada
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+<!-- Mega Menu Dropdown - COMPANY -->
+<div id="mega-menu-full-dropdown" class=" hidden group-hover:block mt-1 border-gray-200 shadow-sm bg-gray-50 md:bg-white border-y dark:bg-gray-800 dark:border-gray-600">
+    <div class="grid max-w-screen-xl px-4 py-5 mx-auto text-gray-900 dark:text-white sm:grid-cols-2 md:px-6">
+        <ul>
+            <li>
+                <a href="game.html"  class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <div class="font-semibold">Constitution Snap</div>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Match, Snap, and Master the Constitution in a Fun and Engaging Way</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <div class="font-semibold">Game3</div>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">In Progress...</span>
+                </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a href="../hangman-game/index.html" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <div class="font-semibold">HungMan Gulity</div>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Guess letters to reveal constitutional terms before time runs out.</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <div class="font-semibold">Game 4</div>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">In Progress...</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- Sign In/Sign Up Modal -->
+
+</div>
+</nav>
+
+
+<div class="bg-white dark:bg-gray-900">
+
+<div class="bg-white dark:bg-gray-900">
+<section class="hero-section" style="background-image: url('uploads/imgs/banner-wp.jpg');">
+    <div class="content-container">
+        
+        <h1 style="
+        margin-bottom: 1rem;
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: #ffffff;
+        animation: float 3s ease-in-out infinite;
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;">Explore the Constitution of India in a Fun and Engaging Way!</h1>
+        
+        <p style="
+        margin-bottom: 2rem;
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: #D1D5DB;
+        padding: 0 4rem;
+        animation: float 3s ease-in-out infinite;
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;">Interactive games and resources to help you understand your rights, duties, and the foundations of our nation.</p>
+        <div style="
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        animation: float 3s ease-in-out infinite;
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;" class="button-group">
+            <a href="#" class="btn-primary">
+                Start Learning
+                <svg class="arrow-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+            </a>
+            <a href="#" class="btn-secondary">Explore</a>  
+        </div>
+    </div>
+</section>
+</div>
+
+<div id="resources" style="margin-top: 1cm;">
+    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl text-center">
+        
+        <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Learning Resources</span> of the Month.
+    </h1>
+</div>
+<div class="flex space-x-4 p-4; bg-white dark:bg-gray-900" style="display: flex; justify-content: center; margin: 0; gap: 16px; padding: 16px;">
+  <div
+    class="rounded-lg border bg-card text-card-foreground shadow-sm w-[300px] hover:shadow-lg hover:shadow-black transition-shadow"
+    style="border-radius: 8px; border: 1px solid var(--border); background-color: hsl(var(--card)); color: hsl(var(--card-foreground)); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); width: 300px; transition: box-shadow 0.3s; cursor: pointer;"
+    onmouseover="this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)'"
+    onmouseout="this.style.boxShadow='0 1px 3px rgba(0, 0, 0, 0.1)'"
+  >
+    <img
+      src="uploads/imgs/funda-right.jpg"
+      alt="Card Image"
+      class="w-full h-[200px] object-cover rounded-t-md"
+      width="300"
+      height="200"
+      style="width: 100%; height: 200px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;"
+    />
+    <div class="p-4" style="padding: 16px;">
+      <h2 class="text-xl font-bold" style="font-size: 1.25rem; color:#9900ff;font-weight: bold;">Fundamental Rights</h2>
+      <p class="text-muted-foreground" style="color: #9900ff85;">
+        Guaranteed Rights and Freedoms for Every Citizen
+      </p>
+      <button onclick="window.location.href='../learning-resources/funda.html'"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 mt-4 bg-[#6b46c1] text-white"
+        style="display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; border-radius: 4px; font-size: 0.875rem; font-weight: 500; background-color: #9900ff; color: white; height: 40px; padding: 8px 16px; margin-top: 16px; transition: background-color 0.3s; cursor: pointer;"
+        onmouseover="this.style.backgroundColor='#9900ff'"
+        onmouseout="this.style.backgroundColor='#6b46c1'"
+      >
+        Learn More
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="rounded-lg border bg-card text-card-foreground shadow-sm w-[300px] hover:shadow-lg hover:shadow-black transition-shadow"
+    style="border-radius: 8px; border: 1px solid var(--border); background-color: hsl(var(--card)); color: hsl(var(--card-foreground)); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); width: 300px; transition: box-shadow 0.3s; cursor: pointer;"
+    onmouseover="this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)'"
+    onmouseout="this.style.boxShadow='0 1px 3px rgba(0, 0, 0, 0.1)'"
+  >
+    <img
+      src="uploads/imgs/preamble.png"
+      alt="Card Image"
+      class="w-full h-[200px] object-cover rounded-t-md"
+      width="300"
+      height="200"
+      style="width: 100%; height: 200px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;"
+    />
+    <div class="p-4" style="padding: 16px;">
+      <h2 class="text-xl font-bold" style="font-size: 1.25rem; color:#005eab ;font-weight: bold;">Preamble</h2>
+      <p class="text-muted-foreground" style="color: #005eab84;">
+        The Foundational Statement of Core Values and Objectives
+      </p>
+      <button onclick="window.location.href='../learning-resources/prem.html'"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 mt-4 bg-[#4299e1] text-white"
+        style="display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; border-radius: 4px; font-size: 0.875rem; font-weight: 500; background-color: #005eab; color: white; height: 40px; padding: 8px 16px; margin-top: 16px; transition: background-color 0.3s; cursor: pointer;"
+        onmouseover="this.style.backgroundColor='#005eab'"
+        onmouseout="this.style.backgroundColor='#4299e1'"
+      >
+        Learn More
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="rounded-lg border bg-card text-card-foreground shadow-sm w-[300px] hover:shadow-lg hover:shadow-black transition-shadow"
+    style="border-radius: 8px; border: 1px solid var(--border); background-color: hsl(var(--card)); color: hsl(var(--card-foreground)); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); width: 300px; transition: box-shadow 0.3s; cursor: pointer;"
+    onmouseover="this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)'"
+    onmouseout="this.style.boxShadow='0 1px 3px rgba(0, 0, 0, 0.1)'"
+  >
+    <img
+      src="uploads/imgs/d&p.jpg"
+      alt="Card Image"
+      class="w-full h-[200px] object-cover rounded-t-md"
+      width="300"
+      height="200"
+      style="width: 100%; height: 200px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;"
+    />
+    <div class="p-4" style="padding: 16px;">
+      <h2 class="text-xl font-bold" style="font-size: 1.25rem; color:#00ff6a ;font-weight: bold;">Directive Principles of State</h2>
+      <p class="text-muted-foreground" style="color: #00ff6a87;">
+        Guiding Principles for Social and Economic Governance
+      </p>
+      <button onclick="window.location.href='../learning-resources/princi.html'"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 mt-4 bg-[#48bb78] text-white"
+        style="display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; border-radius: 4px; font-size: 0.875rem; font-weight: 500; background-color: #00ff6a; color: white; height: 40px; padding: 8px 16px; margin-top: 16px; transition: background-color 0.3s; cursor: pointer;"
+        onmouseover="this.style.backgroundColor='#3a8e60'"
+        onmouseout="this.style.backgroundColor='#00ff6a'"
+      >
+        Learn More
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="rounded-lg border bg-card text-card-foreground shadow-sm w-[300px] hover:shadow-lg hover:shadow-black transition-shadow"
+    style="border-radius: 8px; border: 1px solid var(--border); background-color: hsl(var(--card)); color: hsl(var(--card-foreground)); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); width: 300px; transition: box-shadow 0.3s; cursor: pointer;"
+    onmouseover="this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)'"
+    onmouseout="this.style.boxShadow='0 1px 3px rgba(0, 0, 0, 0.1)'"
+  >
+    <img
+      src="uploads/imgs/preamble.png"
+      alt="Card Image"
+      class="w-full h-[200px] object-cover rounded-t-md"
+      width="300"
+      height="200"
+      style="width: 100%; height: 200px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;"
+    />
+    <div class="p-4" style="padding: 16px;">
+      <h2 class="text-xl font-bold" style="font-size: 1.25rem; color:red ; font-weight: bold;">Preamble</h2>
+      <p class="text-muted-foreground" style="color: rgba(255, 0, 0, 0.5)">
+        The Foundational Statement of Core Values and Objectives
+      </p>
+      <button onclick="window.location.href='../learning-resources/str.html'"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 mt-4 bg-[#4299e1] text-white"
+        style="display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; border-radius: 4px; font-size: 0.875rem; font-weight: 500; background-color: #ff0000; color: white; height: 40px; padding: 8px 16px; margin-top: 16px; transition: background-color 0.3s; cursor: pointer;"
+        onmouseover="this.style.backgroundColor='#c60000'"
+        onmouseout="this.style.backgroundColor='#ff0000'"
+      >
+        Learn More
+      </button>
+    </div>
+  </div>
+</div>
+
+  
+
+<div class="bg-white dark:bg-gray-900 flex flex-col items-center justify-center mt-12">
+    <!-- Title and Description -->
+    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl text-center">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Featured Game</span> of the Month.
+    </h1>
+    <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 text-center mb-8">
+        Discover and play our top pick, designed to make learning the Constitution fun and interactive!
+    </p>
+
+    <!-- Cards Container -->
+    <div class="grid gap-6 md:grid-cols-2 max-w-4xl w-full">
+        <!-- Card 1 -->
+        <div class="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
+            <a href="#">
+                <img class="rounded-t-lg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Pile_of_playing_cards.jpg/1200px-Pile_of_playing_cards.jpg" alt="" />
+            </a>
+            <div class="p-5">
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Constitution Snap</h5>
+                </a>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Match, Snap, and Master the Constitution in a Fun and Engaging Way</p>
+                <a href="game.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Let's Play
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
+            <a href="#">
+                <img class="rounded-t-lg" src="img/image.png" alt="" />
+            </a>
+            <div class="p-5">
+                <a href="../hangman-game/index.html">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">HungMan Game</h5>
+                </a>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Guess the missing letters to complete key constitutional terms or phrases (like "Preamble" or "Right to Equality") before the figure is fully drawn</p>
+                <a href="../hangman-game/index.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Read more
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<br>
+
+<section class="bg-blue-600 text-white py-12">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">How It Works</h2>
+        <h3 class="text-4xl mb-8">Three Steps to Smarter Learning</h3>
+        <div class="flex flex-col md:flex-row justify-around items-stretch">
+            <div class="step text-center flex-1 px-4 py-6">
+                <div class="text-6xl mb-4">1</div>
+                <h4 class="text-xl font-semibold">EXPLORE</h4>
+                <p class="mt-2">Browse through our games and resources.</p>
+            </div>
+            <div class="step text-center flex-1 px-4 py-6">
+                <div class="text-6xl mb-4">2</div>
+                <h4 class="text-xl font-semibold">LEARN</h4>
+                <p class="mt-2">Play games, read simplified articles, and take quizzes.</p>
+            </div>
+            <div class="step text-center flex-1 px-4 py-6">
+                <div class="text-6xl mb-4">3</div>
+                <h4 class="text-xl font-semibold">GROW</h4>
+                <p class="mt-2">Track your progress and become more knowledgeable about your rights and duties.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="fixed bottom-0 right-0 mb-4 mr-4">
+    <button id="open-chat" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+        Chat with Admin Bot
+    </button>
+</div>
+<div id="chat-container" class="hidden fixed bottom-16 right-4 w-96">
+    <div class="bg-white shadow-md rounded-lg max-w-lg w-full">
+        <div class="p-4 border-b bg-blue-500 text-white rounded-t-lg flex justify-between items-center">
+            <p class="text-lg font-semibold">Admin Bot</p>
+            <button id="close-chat" class="text-gray-300 hover:text-gray-400 focus:outline-none focus:text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="chatbox" class="p-4 h-80 overflow-y-auto">
+          <!-- Chat messages will be displayed here -->
+        </div>
+        <div class="p-4 border-t flex">
+            <input id="user-input" type="text" placeholder="Type a message" class="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="send-button" class="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-gray-900" style="margin: 3rem 2rem;">
+    <h2 class = "bg-white dark:bg-gray-900" style="text-align: center; font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; color: #006aff;">
+        What Our Users Say
+    </h2>
+
+    <!-- Testimonial Slider -->
+    <div class="testimonial-slider" style="position: relative; max-width: 800px; margin: 0 auto; overflow: hidden;">
+        <div class="slides" style="display: flex; transition: transform 0.5s ease-in-out;">
+            
+            <!-- Testimonial 1 -->
+            <article style="min-width: 100%; box-sizing: border-box;">
+                <div class="flex items-center mb-4">
+                    <img class="w-10 h-10 me-4 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="">
+                    <div class="font-medium dark:text-white">
+                        <p>Rohit Kumar Tiwari<time datetime="2014-08-16 19:00" class="block text-sm text-gray-500 dark:text-gray-400">Joined on August 2024</time></p>
+                    </div>
+                </div>
+                <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <!-- Additional stars here -->
+                    <h3 class="ms-2 text-sm font-semibold text-gray-900 dark:text-white">Thinking to buy another one!</h3>
+                </div>
+                <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400"><p>Reviewed in the INIDA on <time datetime="2017-03-03 19:00">August 23, 2024</time></p></footer>
+                <p class="mb-2 text-gray-500 dark:text-gray-400">I was always intimidated by the idea of studying the Constitution, but this platform changed everything for me. The games are so engaging that I didn’t even realize how much I was learning. </p>
+                <p class="mb-3 text-gray-500 dark:text-gray-400">The simplified articles made complex topics easy to understand, and now I feel much more confident about my knowledge of Fundamental Rights and Duties. It’s been a game-changer for me!</p>
+                <a href="#" class="block mb-5 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Read more</a>
+                <aside>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">19 people found this helpful</p>
+                    <div class="flex items-center mt-3">
+                        <a href="#" class="px-2 py-1.5 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Helpful</a>
+                        <a href="#" class="ps-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 border-gray-200 ms-4 border-s md:mb-0 dark:border-gray-600">Report abuse</a>
+                    </div>
+                </aside>
+            </article>
+            
+            <!-- Repeat Testimonial 2 and 3 here -->
+            <!-- Testimonial 2 -->
+            <article style="min-width: 100%; box-sizing: border-box;">
+                <!-- Testimonial content similar to the first one -->
+                <div class="flex items-center mb-4">
+                    <img class="w-10 h-10 me-4 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="">
+                    <div class="font-medium dark:text-white">
+                        <p>Harshit Agrwal <time datetime="2014-08-16 19:00" class="block text-sm text-gray-500 dark:text-gray-400">Joined on August 2024</time></p>
+                    </div>
+                </div>
+                <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <!-- Additional stars here -->
+                    <h3 class="ms-2 text-sm font-semibold text-gray-900 dark:text-white">Thinking to buy another one!</h3>
+                </div>
+                <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400"><p>Reviewed in the United Kingdom on <time datetime="2017-03-03 19:00">March 28, 2024</time></p></footer>
+                <p class="mb-2 text-gray-500 dark:text-gray-400">As a high school teacher, I’ve always looked for ways to make civics more interesting for my students. The 'Nagrik Aur Samvidhan' platform has been an invaluable resource in my classroom. "</p>
+                <p class="mb-3 text-gray-500 dark:text-gray-400">The interactive games and quizzes keep the students engaged, and the multilingual support helps me reach those who struggle with English. My students are now excited about learning, and their understanding of the Constitution has improved dramatically.</p>
+                <a href="#" class="block mb-5 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Read more</a>
+                <aside>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">19 people found this helpful</p>
+                    <div class="flex items-center mt-3">
+                        <a href="#" class="px-2 py-1.5 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Helpful</a>
+                        <a href="#" class="ps-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 border-gray-200 ms-4 border-s md:mb-0 dark:border-gray-600">Report abuse</a>
+                    </div>
+                </aside>
+            </article>
+        
+
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div style="text-align: center; margin-top: 1rem;">
+        <button onclick="prevSlide()" style="padding: 0.5rem 1rem; margin-right: 1rem;">&#10094; Previous</button>
+        <button onclick="nextSlide()" style="padding: 0.5rem 1rem;">Next &#10095;</button>
+    </div>
+</section>
+</div>
+
+
+<section id="contact" class="bg-white dark:bg-gray-900 flex flex-wrap">
+    <!-- Left Side: Large Heading -->
+    <div class="flex items-center justify-center w-full lg:w-1/2 p-8 bg-gray-200 dark:bg-gray-800">
+      <h2 class="text-6xl font-extrabold text-gray-900 dark:text-white">
+        Contact Us
+      </h2>
+    </div>
+  
+    <!-- Right Side: Contact Form -->
+    <div class="w-full lg:w-1/2 py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+      <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
+        Got a technical issue? Want to send feedback about a beta feature? Need details about our Business plan? Let us know.
+      </p>
+      <form action="#" class="space-y-8">
+        <div>
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
+          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
+        </div>
+        <div>
+          <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Subject</label>
+          <input type="text" id="subject" class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Let us know how we can help you" required>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your message</label>
+          <textarea id="message" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Leave a comment..."></textarea>
+        </div>
+        <button type="submit" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-orange-500 sm:w-fit hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
+            Send message
+        </button>
+            </form>
+    </div>
+  </section>
+</div>
+
+
+<a href="../mahila-samvidhan/WomenSection/index.html" style="position: fixed; bottom: 20px; left: 20px; z-index: 1000; display: inline-block; text-decoration: none;">
+    <div style="height: 100px; width: 100px; border: 4px solid #fb00ff; padding: 6px; border-radius: 50%; position: relative; background-color: #a600ff;">
+      <div style="position: absolute; height: 6px; width: 6px; left: 0; right: 0; top: 0; bottom: 0; margin: auto; box-shadow: 0px 0px 0px transparent, 62px 0px #00fff7, 44px 44px #00fff7, 0px 62px #00fff7, -44px 44px #00fff7, -62px 0px #00fff7, -44px -44px #00fff7, 0px -62px #00fff7; transform: rotate(45deg); animation: animate-2 1s ease-in-out infinite;"></div>
+      <div style="position: absolute; height: 6px; width: 6px; left: 0; right: 0; top: 0; bottom: 0; margin: auto; box-shadow: 0px 0px 0px transparent, 59px 0px #00fff7, 41px 41px #00fff7, 0px 59px #00fff7, -41px 41px #00fff7, -59px 0px #00fff7, -41px -41px #00fff7, 0px -59px #00fff7; transform: rotate(12deg); animation: animate-1 1s ease-in-out infinite;"></div>
+      <img src="https://thumbs.dreamstime.com/b/logo-concept-two-faces-women-colors-pink-rainbow-abstract-symbol-s-freedom-month-pride-being-woman-307781619.jpg" alt="Avatar" style="max-width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+    </div>
+  </a>
+
+
+<footer class="bg-white dark:bg-gray-900">
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+        <div class="md:flex md:justify-between">
+          <div class="mb-6 md:mb-0">
+            <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <img src="uploads/imgs/wp-logo.png" class="h-16" alt="nagrik-aur-samvidhan">
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Nagrik Aur Samvidhan</span>
+            </a>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-2">
+              <div>
+                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
+                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                      <li class="mb-4">
+                          <a href="https://www.constitutionofindia.net/" class="hover:underline">Indian Constitution</a>
+                      </li>
+                  </ul>
+              </div>
+              <div>
+                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
+                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                      <li class="mb-4">
+                          <a href="https://github.com/rohitKT-23" class="hover:underline ">Github</a>
+                      </li>
+                      <li>
+                          <a href="https://www.linkedin.com/in/rohit-kumar-tiwari-b43490315/" class="hover:underline">LinkedIn</a>
+                          
+                      </li>
+                      <div id="myid"></div>
+                  </ul>
+                  
+              </div>
+              
+            </div>
+
+      </div>
+      <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+      <div class="sm:flex sm:items-center sm:justify-between">
+          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="index.html" class="hover:underline">CODE SYNDICATE</a>. All Rights Reserved.
+          </span>
+          <div class="flex mt-4 sm:justify-center sm:mt-0">
+              <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                        <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+                    </svg>
+                  <span class="sr-only">Facebook page</span>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 21 16">
+                        <path d="M16.942 1.556a16.3 16.3 0 0 0-4.126-1.3 12.04 12.04 0 0 0-.529 1.1 15.175 15.175 0 0 0-4.573 0 11.585 11.585 0 0 0-.535-1.1 16.274 16.274 0 0 0-4.129 1.3A17.392 17.392 0 0 0 .182 13.218a15.785 15.785 0 0 0 4.963 2.521c.41-.564.773-1.16 1.084-1.785a10.63 10.63 0 0 1-1.706-.83c.143-.106.283-.217.418-.33a11.664 11.664 0 0 0 10.118 0c.137.113.277.224.418.33-.544.328-1.116.606-1.71.832a12.52 12.52 0 0 0 1.084 1.785 16.46 16.46 0 0 0 5.064-2.595 17.286 17.286 0 0 0-2.973-11.59ZM6.678 10.813a1.941 1.941 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.919 1.919 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Zm6.644 0a1.94 1.94 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.918 1.918 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Z"/>
+                    </svg>
+                  <span class="sr-only">Discord community</span>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">
+                    <path fill-rule="evenodd" d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z" clip-rule="evenodd"/>
+                </svg>
+                  <span class="sr-only">Twitter page</span>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="sr-only">GitHub account</span>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 0a10 10 0 1 0 10 10A10.009 10.009 0 0 0 10 0Zm6.613 4.614a8.523 8.523 0 0 1 1.93 5.32 20.094 20.094 0 0 0-5.949-.274c-.059-.149-.122-.292-.184-.441a23.879 23.879 0 0 0-.566-1.239 11.41 11.41 0 0 0 4.769-3.366ZM8 1.707a8.821 8.821 0 0 1 2-.238 8.5 8.5 0 0 1 5.664 2.152 9.608 9.608 0 0 1-4.476 3.087A45.758 45.758 0 0 0 8 1.707ZM1.642 8.262a8.57 8.57 0 0 1 4.73-5.981A53.998 53.998 0 0 1 9.54 7.222a32.078 32.078 0 0 1-7.9 1.04h.002Zm2.01 7.46a8.51 8.51 0 0 1-2.2-5.707v-.262a31.64 31.64 0 0 0 8.777-1.219c.243.477.477.964.692 1.449-.114.032-.227.067-.336.1a13.569 13.569 0 0 0-6.942 5.636l.009.003ZM10 18.556a8.508 8.508 0 0 1-5.243-1.8 11.717 11.717 0 0 1 6.7-5.332.509.509 0 0 1 .055-.02 35.65 35.65 0 0 1 1.819 6.476 8.476 8.476 0 0 1-3.331.676Zm4.772-1.462A37.232 37.232 0 0 0 13.113 11a12.513 12.513 0 0 1 5.321.364 8.56 8.56 0 0 1-3.66 5.73h-.002Z" clip-rule="evenodd"/>
+                </svg>
+                  <span class="sr-only">Dribbble account</span>
+              </a>
+          </div>
+      </div>
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+<script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+    var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+// Change the icons inside the button based on previous settings
+if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    themeToggleLightIcon.classList.remove('hidden');
+} else {
+    themeToggleDarkIcon.classList.remove('hidden');
+}
+
+var themeToggleBtn = document.getElementById('theme-toggle');
+
+themeToggleBtn.addEventListener('click', function() {
+
+    // toggle icons inside button
+    themeToggleDarkIcon.classList.toggle('hidden');
+    themeToggleLightIcon.classList.toggle('hidden');
+
+    // if set via local storage previously
+    if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        }
+
+    // if NOT set via local storage previously
+    } else {
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    }
+    
+});
+</script>
+<script>// Get elements
+    // Get elements
+// Get elements
+var getStartedBtn = document.querySelector('button.bg-blue-700');
+var authModal = document.getElementById('authModal');
+var closeModalBtn = document.getElementById('closeModal');
+var modalContent = authModal.querySelector('.transform');
+var signInForm = document.getElementById('signInForm');
+var signUpForm = document.getElementById('signUpForm');
+var modalTitle = document.getElementById('modalTitle');
+var showSignUpForm = document.getElementById('showSignUpForm');
+var showSignInForm = document.getElementById('showSignInForm');
+
+// Show modal with transition
+getStartedBtn.addEventListener('click', function () {
+    authModal.classList.remove('hidden');
+    setTimeout(function () {
+        authModal.classList.remove('opacity-0');
+        modalContent.classList.remove('scale-95');
+    }, 10); // Delay to trigger transition
+});
+
+// Hide modal with transition
+closeModalBtn.addEventListener('click', function () {
+    authModal.classList.add('opacity-0');
+    modalContent.classList.add('scale-95');
+    setTimeout(function () {
+        authModal.classList.add('hidden');
+    }, 300); // Duration of transition
+});
+
+// Hide modal when clicking outside of the modal content
+window.addEventListener('click', function (e) {
+    if (e.target == authModal) {
+        authModal.classList.add('opacity-0');
+        modalContent.classList.add('scale-95');
+        setTimeout(function () {
+            authModal.classList.add('hidden');
+        }, 300); // Duration of transition
+    }
+});
+
+// Toggle to sign-up form
+showSignUpForm.addEventListener('click', function (e) {
+    e.preventDefault();
+    signInForm.classList.add('hidden');
+    signUpForm.classList.remove('hidden');
+    modalTitle.textContent = 'Sign Up';
+    
+});
+
+// Toggle to sign-in form
+showSignInForm.addEventListener('click', function (e) {
+    e.preventDefault();
+    signUpForm.classList.add('hidden');
+    signInForm.classList.remove('hidden');
+    modalTitle.textContent = 'Sign In';
+});
+
+
+    </script>
+
+    <script>
+        // JavaScript to hide the loading screen and show the main content
+        window.addEventListener('load', function () {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const contentContainer = document.querySelector('.content-container');
+            let lastScrollTop = 0;
+    
+            window.addEventListener('scroll', function () {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+                if (currentScroll > lastScrollTop) {
+                    // Scrolling down
+                    contentContainer.classList.add('hidden');
+                } else {
+                    // Scrolling up
+                    contentContainer.classList.remove('hidden');
+                }
+    
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.card');
+            let lastScrollTop = 0;
+    
+            window.addEventListener('scroll', function () {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+                cards.forEach(card => {
+                    const cardTop = card.getBoundingClientRect().top + window.scrollY;
+                    const windowBottom = window.scrollY + window.innerHeight;
+    
+                    if (windowBottom > cardTop) {
+                        if (currentScroll > lastScrollTop) {
+                            // Scrolling down
+                            card.classList.remove('wipe-up');
+                            card.classList.add('wipe-down');
+                        } else {
+                            // Scrolling up
+                            card.classList.remove('wipe-down');
+                            card.classList.add('wipe-up');
+                        }
+                        card.classList.add('visible');
+                    } else {
+                        card.classList.remove('visible');
+                    }
+                });
+    
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const steps = document.querySelectorAll('.step');
+            let stepDelay = 0;
+    
+            window.addEventListener('scroll', function () {
+                const containerTop = document.querySelector('.container').getBoundingClientRect().top;
+                const windowBottom = window.innerHeight;
+    
+                if (containerTop < windowBottom) {
+                    steps.forEach((step, index) => {
+                        setTimeout(() => {
+                            step.classList.add('visible');
+                        }, stepDelay);
+                        stepDelay += 1000; // 01 seconds delay for each step
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <script>
+        const chatbox = document.getElementById("chatbox");
+        const chatContainer = document.getElementById("chat-container");
+        const userInput = document.getElementById("user-input");
+        const sendButton = document.getElementById("send-button");
+        const openChatButton = document.getElementById("open-chat");
+        const closeChatButton = document.getElementById("close-chat");
+    
+        let isChatboxOpen = false; // Initial state is closed
+    
+        // Function to toggle the chatbox visibility
+        function toggleChatbox() {
+            chatContainer.classList.toggle("hidden");
+            isChatboxOpen = !isChatboxOpen; // Toggle the state
+        }
+    
+        // Add an event listener to the open chat button
+        openChatButton.addEventListener("click", toggleChatbox);
+    
+        // Add an event listener to the close chat button
+        closeChatButton.addEventListener("click", toggleChatbox);
+    
+        // Add an event listener to the send button
+        sendButton.addEventListener("click", function () {
+            const userMessage = userInput.value;
+            if (userMessage.trim() !== "") {
+                addUserMessage(userMessage);
+                respondToUser(userMessage);
+                userInput.value = "";
+            }
+        });
+    
+        userInput.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                const userMessage = userInput.value;
+                if (userMessage.trim() !== "") {
+                    addUserMessage(userMessage);
+                    respondToUser(userMessage);
+                    userInput.value = "";
+                }
+            }
+        });
+    
+        function addUserMessage(message) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("mb-2", "text-right");
+            messageElement.innerHTML = `<p class="bg-blue-500 text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    
+        function addBotMessage(message) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("mb-2");
+            messageElement.innerHTML = `<p class="bg-gray-200 text-gray-700 rounded-lg py-2 px-4 inline-block">${message}</p>`;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    
+        function respondToUser(userMessage) {
+            setTimeout(() => {
+                sendMessageToServer(userMessage);
+            }, 500);
+        }
+    
+        function sendMessageToServer(userMessage) {
+            console.log(userMessage);
+            fetch('http://127.0.0.1:5000/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    question: userMessage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response) {
+                    addBotMessage(data.response);
+                } else {
+                    addBotMessage("Sorry, something went wrong.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                addBotMessage("Error occurred while sending your message.");
+            });
+        }
+    
+        // Automatically open the chatbox with a delay and transition
+        setTimeout(() => {
+            chatContainer.classList.remove("hidden");
+            chatContainer.classList.add("transition", "duration-500", "transform", "translate-y-full");
+            setTimeout(() => {
+                chatContainer.classList.remove("translate-y-full");
+            }, 100);
+            isChatboxOpen = true;
+        }, 5000);
+    </script>
+        <script>
+            let currentSlide = 0;
+        
+            function showSlide(index) {
+                const slides = document.querySelector('.slides');
+                const totalSlides = document.querySelectorAll('.slides article').length;
+        
+                if (index >= totalSlides) {
+                    currentSlide = 0;
+                } else if (index < 0) {
+                    currentSlide = totalSlides - 1;
+                } else {
+                    currentSlide = index;
+                }
+        
+                const offset = -currentSlide * 100; // Each slide takes 100% width
+                slides.style.transform = `translateX(${offset}%)`;
+            }
+        
+            function nextSlide() {
+                showSlide(currentSlide + 1);
+            }
+        
+            function prevSlide() {
+                showSlide(currentSlide - 1);
+            }
+        </script>
+
+
+        <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+<script>
+    function loadGoogleTranslate() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'myid');
+    }
+</script>
+          
+          
+        
+    
+</body>
+
+
+
+</html>
